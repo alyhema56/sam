@@ -825,4 +825,5 @@ Merci pour votre confiance ! 🚀`;
                 });
             });
         }
+
     </script>
