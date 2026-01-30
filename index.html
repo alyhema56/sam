@@ -138,7 +138,7 @@
             padding: 0 15px;
         }
 
-        /* ===== HEADER IMPROVÉ ===== */
+        /* ===== HEADER AMÉLIORÉ ===== */
         header {
             background: linear-gradient(135deg, #2c3e50, #3498db);
             color: white;
@@ -156,6 +156,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            min-height: 60px;
         }
 
         .logo {
@@ -164,6 +166,8 @@
             gap: 12px;
             text-decoration: none;
             color: white;
+            z-index: 2;
+            position: relative;
         }
 
         .logo i {
@@ -181,6 +185,35 @@
             color: var(--accent-color);
         }
 
+        /* ===== STATUS BADGE CENTRÉ ===== */
+        .status-badge {
+            background: var(--success-color);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulse 2s infinite;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .status-badge.closed {
+            background: var(--danger-color);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
         /* Menu Mobile */
         .mobile-menu-btn {
             display: none;
@@ -191,6 +224,7 @@
             cursor: pointer;
             padding: 5px;
             transition: var(--transition);
+            z-index: 2;
         }
 
         .mobile-menu-btn:hover {
@@ -241,27 +275,145 @@
             transform: translateY(-2px);
         }
 
-        /* Status Badge */
-        .status-badge {
-            background: var(--success-color);
+        /* Cart Icon */
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-color);
             color: white;
-            padding: 6px 15px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* ===== PUBLICITÉ SAMSERVICE ===== */
+        .advertisement-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2001;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .advertisement-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .advertisement-content {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            color: white;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: scaleIn 0.5s ease;
+            position: relative;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .advertisement-header {
+            margin-bottom: 25px;
+        }
+
+        .advertisement-header i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .advertisement-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .advertisement-body {
+            margin-bottom: 30px;
+        }
+
+        .advertisement-body p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .advertisement-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
             border-radius: 20px;
             font-size: 0.9rem;
-            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 8px;
-            animation: pulse 2s infinite;
         }
 
-        .status-badge.closed {
-            background: var(--danger-color);
+        .advertisement-timer {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            color: var(--accent-color);
+            font-weight: bold;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+        .close-advertisement {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .close-advertisement:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
         }
 
         /* ===== HERO SECTION ===== */
@@ -449,19 +601,11 @@
             transform: translateY(-3px);
         }
 
-        /* Grille de produits (2 colonnes sur mobile) */
+        /* Grille de produits */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
-        }
-
-        /* Mobile: 2 colonnes */
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
         }
 
         /* Carte produit améliorée */
@@ -540,6 +684,9 @@
             font-size: 1.2rem;
             margin-bottom: 10px;
             color: var(--primary-color);
+            min-height: 40px;
+            display: flex;
+            align-items: center;
         }
 
         .product-price {
@@ -561,17 +708,19 @@
             text-decoration: line-through;
         }
 
+        /* BOUTONS NORMALS - AJOUTER AU-DESSUS DE COMMANDER */
         .product-actions {
             display: flex;
+            flex-direction: column;
             gap: 10px;
         }
 
         .btn-order {
-            flex: 1;
+            width: 100%;
             background: linear-gradient(45deg, var(--secondary-color), #2980b9);
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
@@ -586,6 +735,15 @@
             background: linear-gradient(45deg, #2980b9, var(--secondary-color));
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-order.btn-command {
+            background: linear-gradient(45deg, var(--accent-color), #e74c3c);
+        }
+
+        .btn-order.btn-command:hover {
+            background: linear-gradient(45deg, #e74c3c, var(--accent-color));
+            box-shadow: 0 10px 20px rgba(231, 126, 34, 0.3);
         }
 
         /* ===== PANIER ===== */
@@ -640,27 +798,6 @@
             color: var(--accent-color);
             margin-top: 20px;
             text-align: right;
-        }
-
-        .cart-icon {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--accent-color);
-            color: white;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
         }
 
         /* ===== NOUVEAU MODAL DE COMMANDE ===== */
@@ -1063,6 +1200,14 @@
                 font-size: 2rem;
             }
             
+            .status-badge {
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1001;
+            }
+            
             .nav-container {
                 position: fixed;
                 top: 0;
@@ -1095,14 +1240,6 @@
             
             .mobile-menu-btn {
                 display: block;
-                z-index: 1000;
-            }
-            
-            .status-badge {
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                z-index: 1000;
             }
             
             .cart-container {
@@ -1128,6 +1265,40 @@
             .floating-btn {
                 width: 50px;
                 height: 50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Grille 2 colonnes sur mobile */
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            /* BOUTONS EN COLONNE SUR MOBILE */
+            .product-actions {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .product-actions .btn-order {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            
+            .product-info {
+                padding: 15px;
+            }
+            
+            .product-name {
+                font-size: 1rem;
+                min-height: 40px;
+            }
+            
+            .nav-container.active .status-badge {
+                position: static;
+                transform: none;
+                margin-bottom: 20px;
             }
         }
 
@@ -1191,6 +1362,24 @@
             
             .floating-btn i {
                 font-size: 1.2rem;
+            }
+            
+            .status-badge {
+                padding: 5px 12px;
+                font-size: 0.8rem;
+                top: 15px;
+            }
+            
+            .advertisement-content {
+                padding: 25px;
+            }
+            
+            .advertisement-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .advertisement-body p {
+                font-size: 1rem;
             }
         }
 
@@ -1347,6 +1536,52 @@
         <h2 style="color: white;">Chargement Samservice...</h2>
     </div>
 
+    <!-- Publicité Samservice -->
+    <div class="advertisement-overlay" id="advertisementOverlay">
+        <div class="advertisement-content">
+            <button class="close-advertisement" onclick="closeAdvertisement()">×</button>
+            <div class="advertisement-header">
+                <i class="fas fa-mobile-alt"></i>
+                <h2>SAMSERVICE BANFORA</h2>
+                <p>Votre expert en téléphonie depuis 2018</p>
+            </div>
+            <div class="advertisement-body">
+                <p>🎯 <strong>Spécialiste en vente et réparation de téléphones</strong></p>
+                <p>📱 iPhone • Samsung • Infinix • Accessoires</p>
+                <p>🔧 Réparation express • Garantie 12 mois</p>
+                <p>🚚 Livraison gratuite à Banfora</p>
+                
+                <div class="advertisement-features">
+                    <div class="feature-badge">
+                        <i class="fas fa-shield-alt"></i> Garantie
+                    </div>
+                    <div class="feature-badge">
+                        <i class="fas fa-tools"></i> Réparation
+                    </div>
+                    <div class="feature-badge">
+                        <i class="fas fa-shipping-fast"></i> Livraison
+                    </div>
+                    <div class="feature-badge">
+                        <i class="fas fa-headset"></i> SAV
+                    </div>
+                </div>
+                
+                <div class="advertisement-timer">
+                    <i class="fas fa-clock"></i> Publicité - Ferme dans <span id="adTimer">30</span>s
+                </div>
+                
+                <p>📍 <strong>Secteur 15, Banfora</strong></p>
+                <p>📞 <strong>+226 56 32 30 77</strong> (WhatsApp)</p>
+                <p>⏰ <strong>Ouvert 7j/7, 8h - 22h</strong></p>
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="btn btn-primary" onclick="closeAdvertisement()" style="width: 100%;">
+                    <i class="fas fa-shopping-cart"></i> Voir les produits maintenant
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- PWA Install Prompt -->
     <div class="pwa-install" id="pwaInstall">
         <div class="pwa-install-content">
@@ -1452,6 +1687,12 @@
                     <h1>Sam<span>service</span></h1>
                 </a>
 
+                <!-- Status badge centré -->
+                <div class="status-badge" id="headerStatus">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <span id="statusText">Chargement...</span>
+                </div>
+
                 <!-- Panier Icon -->
                 <div class="cart-icon" onclick="toggleCart()" aria-label="Voir le panier" role="button" tabindex="0">
                     <i class="fas fa-shopping-cart fa-lg"></i>
@@ -1463,11 +1704,6 @@
                 </button>
 
                 <div class="nav-container" id="navContainer">
-                    <div class="status-badge" id="headerStatus">
-                        <i class="fas fa-clock" aria-hidden="true"></i>
-                        <span id="statusText">Chargement...</span>
-                    </div>
-
                     <nav aria-label="Navigation principale">
                         <ul>
                             <li><a href="#home">Accueil</a></li>
@@ -1493,7 +1729,7 @@
         </div>
         <div style="text-align: center;">
             <button class="btn btn-primary" onclick="checkoutFromCart()" style="width: 100%;">
-                <i class="fab fa-whatsapp"></i> Commander ({<span id="cartTotalPrice">0</span>} FCFA)
+                <i class="fab fa-whatsapp"></i> Commander (<span id="cartTotalPrice">0</span> FCFA)
             </button>
         </div>
     </div>
@@ -1652,8 +1888,8 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script> 
-     // ===== GOOGLE ANALYTICS =====
+    <script>
+        // ===== GOOGLE ANALYTICS =====
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -1666,6 +1902,11 @@
         let cart = [];
         let currentTestimonial = 0;
         let selectedProduct = null;
+        let advertisementTimer = null;
+        let advertisementInterval = null;
+        let lastAdvertisementTime = 0;
+        const ADVERTISEMENT_INTERVAL = 300000; // 5 minutes
+        const ADVERTISEMENT_DURATION = 30000; // 30 secondes
 
         // ===== PRODUCTS DATA =====
         const productsData = [
@@ -1785,9 +2026,55 @@
                 document.getElementById('loadingScreen').classList.add('hidden');
                 initApp();
                 
+                // Démarrer la publicité après 10 secondes
+                setTimeout(() => {
+                    showAdvertisement();
+                }, 10000);
+                
                 trackEvent('page_view', 'home');
             }, 1000);
         });
+
+        // ===== FONCTIONS PUBLICITÉ =====
+        function showAdvertisement() {
+            const now = Date.now();
+            // Vérifier si assez de temps s'est écoulé depuis la dernière publicité
+            if (now - lastAdvertisementTime < ADVERTISEMENT_INTERVAL) {
+                return;
+            }
+            
+            const overlay = document.getElementById('advertisementOverlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            advertisementTimer = ADVERTISEMENT_DURATION / 1000;
+            document.getElementById('adTimer').textContent = advertisementTimer;
+            
+            advertisementInterval = setInterval(() => {
+                advertisementTimer--;
+                document.getElementById('adTimer').textContent = advertisementTimer;
+                
+                if (advertisementTimer <= 0) {
+                    closeAdvertisement();
+                }
+            }, 1000);
+            
+            lastAdvertisementTime = now;
+            trackEvent('advertisement_shown', 'engagement');
+        }
+
+        function closeAdvertisement() {
+            const overlay = document.getElementById('advertisementOverlay');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            if (advertisementInterval) {
+                clearInterval(advertisementInterval);
+                advertisementInterval = null;
+            }
+            
+            trackEvent('advertisement_closed', 'engagement');
+        }
 
         // ===== ANALYTICS FUNCTIONS =====
         function trackEvent(eventName, eventCategory, eventLabel = null, eventValue = null) {
@@ -1816,9 +2103,37 @@
             
             initPWA();
             
+            // Détection d'inactivité pour afficher la publicité
+            setupInactivityDetection();
+            
             setInterval(updateOpeningStatus, 30000);
             
             trackEvent('app_initialized', 'engagement');
+        }
+
+        function setupInactivityDetection() {
+            let idleTime = 0;
+            
+            // Réinitialiser le temps d'inactivité sur les événements utilisateur
+            const resetIdleTime = () => {
+                idleTime = 0;
+            };
+            
+            // Incrémenter le temps d'inactivité chaque minute
+            setInterval(() => {
+                idleTime++;
+                // Si inactif pendant 3 minutes, afficher la publicité
+                if (idleTime >= 3) {
+                    showAdvertisement();
+                    idleTime = 0;
+                }
+            }, 60000);
+            
+            // Écouter les événements utilisateur
+            document.addEventListener('mousemove', resetIdleTime);
+            document.addEventListener('keypress', resetIdleTime);
+            document.addEventListener('click', resetIdleTime);
+            document.addEventListener('scroll', resetIdleTime);
         }
 
         // ===== NOUVELLES FONCTIONS MODAL =====
@@ -1957,10 +2272,10 @@
                     </div>
                     <div class="product-actions">
                         <button class="btn-order" onclick="addToCart(${product.id})" aria-label="Ajouter ${product.name} au panier">
-                            <i class="fas fa-cart-plus"></i> Ajouter
+                            <i class="fas fa-cart-plus"></i> Ajouter au panier
                         </button>
-                        <button class="btn-order" style="background: linear-gradient(45deg, var(--accent-color), #e74c3c);" onclick="orderProductDirectly(${product.id})" aria-label="Commander ${product.name}">
-                            <i class="fas fa-shopping-bag"></i> Commander
+                        <button class="btn-order btn-command" onclick="orderProductDirectly(${product.id})" aria-label="Commander ${product.name}">
+                            <i class="fas fa-shopping-bag"></i> Commander maintenant
                         </button>
                     </div>
                 </div>
@@ -2518,12 +2833,19 @@ Merci pour votre confiance ! 🚀`;
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeOrderModal();
+                closeAdvertisement();
             }
         });
 
         document.getElementById('orderModal').addEventListener('click', (e) => {
             if (e.target === document.getElementById('orderModal')) {
                 closeOrderModal();
+            }
+        });
+
+        document.getElementById('advertisementOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('advertisementOverlay')) {
+                closeAdvertisement();
             }
         });
     </script>
