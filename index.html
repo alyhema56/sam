@@ -304,7 +304,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 40%;
             background: rgba(0, 0, 0, 0.9);
             display: none;
             justify-content: center;
@@ -1594,14 +1594,14 @@
                     </div>
                 </div>
                 
-                <!-- NOUVELLE BARRE DE TEMPS ANIMÉE -->
+                <!-- NOUVELLE BARRE DE TEMPS ANIMÉE - MODIFIÉE POUR 15s -->
                 <div class="advertisement-timer">
                     <div class="timer-bar">
                         <div class="timer-progress" id="timerProgress"></div>
                     </div>
                     <div class="timer-text">
                         <span>Publicité en cours...</span>
-                        <span id="remainingTime">30s</span>
+                        <span id="remainingTime">15s</span>
                     </div>
                 </div>
                 
@@ -1941,7 +1941,7 @@
         let advertisementInterval = null;
         let lastAdvertisementTime = 0;
         const ADVERTISEMENT_INTERVAL = 300000; // 5 minutes
-        const ADVERTISEMENT_DURATION = 30000; // 30 secondes
+        const ADVERTISEMENT_DURATION = 15000; // MODIFIÉ: 15 secondes au lieu de 30
 
         // ===== PRODUCTS DATA =====
         const productsData = [
@@ -2082,7 +2082,7 @@
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            advertisementTimer = ADVERTISEMENT_DURATION / 1000; // 30 secondes
+            advertisementTimer = ADVERTISEMENT_DURATION / 1000; // MODIFIÉ: 15 secondes
             updateTimerDisplay();
             
             // Démarrer l'animation de la barre de temps
@@ -2109,8 +2109,8 @@
             // Forcer un reflow
             timerProgress.offsetHeight;
             
-            // Démarrer l'animation
-            timerProgress.style.transition = 'width 30s linear';
+            // Démarrer l'animation - MODIFIÉ: 15 secondes
+            timerProgress.style.transition = 'width 15s linear'; // MODIFIÉ: 15s au lieu de 30s
             timerProgress.style.width = '0%';
         }
 
