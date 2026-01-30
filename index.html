@@ -386,11 +386,39 @@
             gap: 8px;
         }
 
+        /* BARRE DE TEMPS ANIMÉE */
         .advertisement-timer {
-            font-size: 1.2rem;
-            margin: 20px 0;
-            color: var(--accent-color);
-            font-weight: bold;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .timer-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .timer-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, var(--accent-color), #ff9f43);
+            border-radius: 3px;
+            transition: width 0.1s linear;
+            transform-origin: left;
+        }
+
+        .timer-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .close-advertisement {
@@ -1566,8 +1594,15 @@
                     </div>
                 </div>
                 
+                <!-- NOUVELLE BARRE DE TEMPS ANIMÉE -->
                 <div class="advertisement-timer">
-                    <i class="fas fa-clock"></i> Publicité - Ferme dans <span id="adTimer">30</span>s
+                    <div class="timer-bar">
+                        <div class="timer-progress" id="timerProgress"></div>
+                    </div>
+                    <div class="timer-text">
+                        <span>Publicité en cours...</span>
+                        <span id="remainingTime">30s</span>
+                    </div>
                 </div>
                 
                 <p>📍 <strong>Secteur 15, Banfora</strong></p>
@@ -2035,7 +2070,7 @@
             }, 1000);
         });
 
-        // ===== FONCTIONS PUBLICITÉ =====
+        // ===== FONCTIONS PUBLICITÉ AMÉLIORÉE =====
         function showAdvertisement() {
             const now = Date.now();
             // Vérifier si assez de temps s'est écoulé depuis la dernière publicité
@@ -2047,12 +2082,15 @@
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            advertisementTimer = ADVERTISEMENT_DURATION / 1000;
-            document.getElementById('adTimer').textContent = advertisementTimer;
+            advertisementTimer = ADVERTISEMENT_DURATION / 1000; // 30 secondes
+            updateTimerDisplay();
+            
+            // Démarrer l'animation de la barre de temps
+            startTimerAnimation();
             
             advertisementInterval = setInterval(() => {
                 advertisementTimer--;
-                document.getElementById('adTimer').textContent = advertisementTimer;
+                updateTimerDisplay();
                 
                 if (advertisementTimer <= 0) {
                     closeAdvertisement();
@@ -2063,10 +2101,34 @@
             trackEvent('advertisement_shown', 'engagement');
         }
 
+        function startTimerAnimation() {
+            const timerProgress = document.getElementById('timerProgress');
+            timerProgress.style.transition = 'none';
+            timerProgress.style.width = '100%';
+            
+            // Forcer un reflow
+            timerProgress.offsetHeight;
+            
+            // Démarrer l'animation
+            timerProgress.style.transition = 'width 30s linear';
+            timerProgress.style.width = '0%';
+        }
+
+        function updateTimerDisplay() {
+            const remainingTimeElement = document.getElementById('remainingTime');
+            const seconds = advertisementTimer % 60;
+            remainingTimeElement.textContent = `${seconds}s`;
+        }
+
         function closeAdvertisement() {
             const overlay = document.getElementById('advertisementOverlay');
             overlay.classList.remove('active');
             document.body.style.overflow = 'auto';
+            
+            // Réinitialiser la barre de temps
+            const timerProgress = document.getElementById('timerProgress');
+            timerProgress.style.transition = 'none';
+            timerProgress.style.width = '100%';
             
             if (advertisementInterval) {
                 clearInterval(advertisementInterval);
