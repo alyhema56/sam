@@ -60,10 +60,9 @@
     <meta name="theme-color" content="#2c3e50">
     
     <title>Samservice - Vente et Réparation de Téléphones à Banfora | iPhone, Android, Radios</title>
-     
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-     <style>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
@@ -275,6 +274,72 @@
             transform: translateY(-2px);
         }
 
+        /* Bouton Connexion */
+        .auth-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid white;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .auth-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Menu Utilisateur */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .user-menu:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent-color), #e74c3c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .user-email {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+            white-space: nowrap;
+        }
+
         /* Cart Icon */
         .cart-icon {
             position: relative;
@@ -296,6 +361,176 @@
             justify-content: center;
             font-size: 0.8rem;
             font-weight: bold;
+        }
+
+        /* ===== MODALS AUTHENTIFICATION ===== */
+        .auth-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2002;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+
+        .auth-modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .auth-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-modal.show .auth-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .auth-header {
+            padding: 25px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+        }
+
+        .auth-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 5px;
+            margin-top: 15px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .auth-tab.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .auth-body {
+            padding: 30px;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .password-input {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .auth-link {
+            color: var(--secondary-color);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .success-message {
+            background: #efc;
+            color: #2c7;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
         }
 
         /* ===== PUBLICITÉ SAMSERVICE MODIFIÉE ===== */
@@ -987,31 +1222,6 @@
             margin-bottom: 20px;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-        }
-
         /* ===== WHATSAPP PREVIEW ===== */
         .whatsapp-preview {
             background: #25D366;
@@ -1297,6 +1507,10 @@
                 width: 50px;
                 height: 50px;
             }
+            
+            .user-info {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1335,6 +1549,10 @@
             .advertisement-content {
                 padding: 25px;
                 max-height: 85vh;
+            }
+            
+            .auth-content {
+                max-width: 95%;
             }
         }
 
@@ -1426,6 +1644,10 @@
             .feature-badge {
                 padding: 6px 12px;
                 font-size: 0.8rem;
+            }
+            
+            .auth-header h2 {
+                font-size: 1.5rem;
             }
         }
 
@@ -1573,7 +1795,7 @@
                 transform: translateX(0);
             }
         }
-     </style>
+    </style>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -1631,6 +1853,108 @@
                 <button class="btn btn-primary" onclick="closeAdvertisement()" style="width: 100%;">
                     <i class="fas fa-shopping-cart"></i> Voir les produits maintenant
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal d'Authentification -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-content">
+            <div class="auth-header">
+                <h2><i class="fas fa-user-circle"></i> Samservice</h2>
+                <p>Accédez à votre espace client</p>
+                
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="switchAuthTab('login')">Connexion</button>
+                    <button class="auth-tab" onclick="switchAuthTab('register')">Inscription</button>
+                </div>
+            </div>
+            
+            <div class="auth-body">
+                <!-- Messages d'erreur/succès -->
+                <div class="error-message" id="authError"></div>
+                <div class="success-message" id="authSuccess"></div>
+                
+                <!-- Formulaire de Connexion -->
+                <form class="auth-form active" id="loginForm" onsubmit="login(event)">
+                    <div class="form-group">
+                        <label for="loginEmail"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="loginEmail" class="form-control" placeholder="votre@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword"><i class="fas fa-lock"></i> Mot de passe</label>
+                        <div class="password-input">
+                            <input type="password" id="loginPassword" class="form-control" placeholder="Votre mot de passe" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i> Se connecter
+                    </button>
+                </form>
+                
+                <!-- Formulaire d'Inscription -->
+                <form class="auth-form" id="registerForm" onsubmit="register(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="registerNom"><i class="fas fa-user"></i> Nom</label>
+                            <input type="text" id="registerNom" class="form-control" placeholder="Votre nom" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="registerPrenom"><i class="fas fa-user"></i> Prénom</label>
+                            <input type="text" id="registerPrenom" class="form-control" placeholder="Votre prénom" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerEmail"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="registerEmail" class="form-control" placeholder="votre@email.com" required>
+                        <small id="emailFeedback" style="display: none; margin-top: 5px;"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerPassword"><i class="fas fa-lock"></i> Mot de passe</label>
+                        <div class="password-input">
+                            <input type="password" id="registerPassword" class="form-control" placeholder="Min. 8 caractères" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerConfirmPassword"><i class="fas fa-lock"></i> Confirmer le mot de passe</label>
+                        <div class="password-input">
+                            <input type="password" id="registerConfirmPassword" class="form-control" placeholder="Répétez le mot de passe" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('registerConfirmPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="font-size: 0.9rem;">
+                        <input type="checkbox" id="registerTerms" required>
+                        <label for="registerTerms" style="display: inline; font-weight: normal;">
+                            J'accepte les <a href="#" style="color: var(--secondary-color);">conditions d'utilisation</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-user-plus"></i> S'inscrire
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p id="authSwitchText">
+                        Pas encore de compte ? 
+                        <span class="auth-link" onclick="switchAuthTab('register')">S'inscrire</span>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -1746,6 +2070,22 @@
                     <span id="statusText">Chargement...</span>
                 </div>
 
+                <!-- Menu Utilisateur -->
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <div class="user-avatar" onclick="toggleUserDropdown()" id="userAvatar">
+                        <!-- Initiales -->
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName"></span>
+                        <span class="user-email" id="userEmail"></span>
+                    </div>
+                </div>
+
+                <!-- Bouton Connexion (visible quand déconnecté) -->
+                <button class="auth-btn" onclick="openAuthModal('login')" id="loginButton">
+                    <i class="fas fa-sign-in-alt"></i> Connexion
+                </button>
+
                 <!-- Panier Icon -->
                 <div class="cart-icon" onclick="toggleCart()" aria-label="Voir le panier" role="button" tabindex="0">
                     <i class="fas fa-shopping-cart fa-lg"></i>
@@ -1762,7 +2102,7 @@
                             <li><a href="#home">Accueil</a></li>
                             <li><a href="#products">Produits</a></li>
                             <li><a href="#testimonials">Témoignages</a></li>
-                            <li><a href="#order" onclick="openOrderModal(); return false;">Commander</a></li>
+                            <li><a href="#" onclick="openOrderModal(); return false;">Commander</a></li>
                             <li><a href="#contact">Contact</a></li>
                         </ul>
                     </nav>
@@ -1940,13 +2280,9 @@
         </a>
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // ===== GOOGLE ANALYTICS =====
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
+        // ===== CONFIGURATION =====
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRlM2gV8ekqzjd3iwtn-tqnII5o-Sa-miFNYTaENvsuPVEGjDMgFmOL9WZaFR3smmk/exec';
 
         // ===== GLOBAL VARIABLES =====
         let deferredPrompt;
@@ -1959,7 +2295,10 @@
         let advertisementInterval = null;
         let lastAdvertisementTime = 0;
         const ADVERTISEMENT_INTERVAL = 300000; // 5 minutes
-        const ADVERTISEMENT_DURATION = 15000; // MODIFIÉ: 15 secondes au lieu de 30
+        const ADVERTISEMENT_DURATION = 15000; // 15 secondes
+        
+        // ===== VARIABLES AUTHENTIFICATION =====
+        let currentUser = null;
 
         // ===== PRODUCTS DATA =====
         const productsData = [
@@ -1971,7 +2310,7 @@
                 description: "Reconditionné garanti 12 mois, écran 6.7\", 256 Go",
                 price: 450000,
                 oldPrice: 520000,
-                image: "https://www.apple.com/newsroom/images/product/iphone/geo/Apple-iPhone-14-Pro-iPhone-14-Pro-Max-silver-220907-geo_inline.jpg.large.jpg",
+                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 badge: "Nouveau",
                 stock: 5
             },
@@ -2001,7 +2340,7 @@
             },
             {
                 id: 4,
-                name: "Radio Portable Sony ",
+                name: "Radio Portable Sony",
                 category: "radio",
                 subcategory: "Audio",
                 description: "FM/AM avec Bluetooth, batterie longue durée",
@@ -2100,7 +2439,7 @@
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            advertisementTimer = ADVERTISEMENT_DURATION / 1000; // MODIFIÉ: 15 secondes
+            advertisementTimer = ADVERTISEMENT_DURATION / 1000; // 15 secondes
             updateTimerDisplay();
             
             // Démarrer l'animation de la barre de temps
@@ -2127,8 +2466,8 @@
             // Forcer un reflow
             timerProgress.offsetHeight;
             
-            // Démarrer l'animation - MODIFIÉ: 15 secondes
-            timerProgress.style.transition = 'width 15s linear'; // MODIFIÉ: 15s au lieu de 30s
+            // Démarrer l'animation - 15 secondes
+            timerProgress.style.transition = 'width 15s linear';
             timerProgress.style.width = '0%';
         }
 
@@ -2156,16 +2495,299 @@
             trackEvent('advertisement_closed', 'engagement');
         }
 
+        // ===== FONCTIONS AUTHENTIFICATION =====
+        function openAuthModal(tab = 'login') {
+            const modal = document.getElementById('authModal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            
+            switchAuthTab(tab);
+            
+            trackEvent('auth_modal_opened', 'authentication', tab);
+        }
+
+        function closeAuthModal() {
+            const modal = document.getElementById('authModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            
+            // Réinitialiser les formulaires
+            document.getElementById('loginForm').reset();
+            document.getElementById('registerForm').reset();
+            hideMessages();
+        }
+
+        function switchAuthTab(tab) {
+            // Mettre à jour les tabs
+            document.querySelectorAll('.auth-tab').forEach(t => {
+                t.classList.remove('active');
+                if (t.textContent.toLowerCase().includes(tab)) {
+                    t.classList.add('active');
+                }
+            });
+            
+            // Afficher le bon formulaire
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            if (tab === 'login') {
+                document.getElementById('loginForm').classList.add('active');
+                document.getElementById('authSwitchText').innerHTML = 
+                    'Pas encore de compte ? <span class="auth-link" onclick="switchAuthTab(\'register\')">S\'inscrire</span>';
+            } else {
+                document.getElementById('registerForm').classList.add('active');
+                document.getElementById('authSwitchText').innerHTML = 
+                    'Déjà un compte ? <span class="auth-link" onclick="switchAuthTab(\'login\')">Se connecter</span>';
+            }
+        }
+
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = field.parentNode.querySelector('i');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // ===== INSCRIPTION =====
+        async function register(event) {
+            event.preventDefault();
+            
+            const nom = document.getElementById('registerNom').value.trim();
+            const prenom = document.getElementById('registerPrenom').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            
+            // Validation
+            if (!validateEmail(email)) {
+                showError('Veuillez entrer un email valide');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('Le mot de passe doit contenir au moins 6 caractères');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('Les mots de passe ne correspondent pas');
+                return;
+            }
+            
+            // Vérifier si l'email existe déjà
+            const emailExists = await checkEmail(email);
+            if (emailExists) {
+                showError('Cet email est déjà utilisé');
+                return;
+            }
+            
+            // Afficher le chargement
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Inscription en cours...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        action: 'register',
+                        nom: nom,
+                        prenom: prenom,
+                        email: email,
+                        password: password
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showSuccess('Inscription réussie !');
+                    
+                    // Connexion automatique après 2 secondes
+                    setTimeout(async () => {
+                        await loginUser(email, password);
+                        closeAuthModal();
+                    }, 2000);
+                    
+                    trackEvent('user_registered', 'authentication');
+                    
+                } else {
+                    showError(result.message || 'Erreur lors de l\'inscription');
+                }
+                
+            } catch (error) {
+                showError('Erreur de connexion au serveur');
+                console.error('Erreur:', error);
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        // ===== CONNEXION =====
+        async function login(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            // Validation
+            if (!validateEmail(email)) {
+                showError('Veuillez entrer un email valide');
+                return;
+            }
+            
+            // Afficher le chargement
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connexion...';
+            submitBtn.disabled = true;
+            
+            try {
+                await loginUser(email, password);
+                closeAuthModal();
+                
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function loginUser(email, password) {
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        action: 'login',
+                        email: email,
+                        password: password
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Sauvegarder l'utilisateur
+                    currentUser = result.user;
+                    localStorage.setItem('samservice_user', JSON.stringify(currentUser));
+                    
+                    // Mettre à jour l'interface
+                    updateUserInterface();
+                    
+                    showNotification('Connexion réussie !');
+                    trackEvent('user_logged_in', 'authentication');
+                    
+                    return result;
+                } else {
+                    throw new Error(result.message || 'Email ou mot de passe incorrect');
+                }
+                
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        // ===== FONCTIONS UTILITAIRES AUTH =====
+        async function checkEmail(email) {
+            try {
+                const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=checkEmail&email=${encodeURIComponent(email)}`);
+                const result = await response.json();
+                return result; // true ou false
+            } catch (error) {
+                console.error('Erreur vérification email:', error);
+                return false;
+            }
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('authError');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            // Cacher après 5 secondes
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('authSuccess');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            // Cacher après 5 secondes
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function hideMessages() {
+            document.getElementById('authError').style.display = 'none';
+            document.getElementById('authSuccess').style.display = 'none';
+        }
+
+        // ===== GESTION UTILISATEUR =====
+        function updateUserInterface() {
+            if (currentUser) {
+                // Afficher le menu utilisateur
+                document.getElementById('userMenu').style.display = 'flex';
+                document.getElementById('loginButton').style.display = 'none';
+                
+                // Mettre à jour les informations
+                document.getElementById('userName').textContent = `${currentUser.prenom} ${currentUser.nom}`;
+                document.getElementById('userEmail').textContent = currentUser.email;
+                
+                // Avatar avec initiales
+                const initials = (currentUser.prenom[0] + currentUser.nom[0]).toUpperCase();
+                document.getElementById('userAvatar').textContent = initials;
+                
+            } else {
+                // Afficher le bouton connexion
+                document.getElementById('userMenu').style.display = 'none';
+                document.getElementById('loginButton').style.display = 'block';
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('samservice_user');
+            
+            // Mettre à jour l'interface
+            updateUserInterface();
+            
+            showNotification('Déconnexion réussie');
+            trackEvent('user_logged_out', 'authentication');
+            
+            // Rediriger vers l'accueil
+            scrollToSection('home');
+        }
+
         // ===== ANALYTICS FUNCTIONS =====
         function trackEvent(eventName, eventCategory, eventLabel = null, eventValue = null) {
-            if (typeof gtag !== 'undefined') {
-                gtag('event', eventName, {
-                    'event_category': eventCategory,
-                    'event_label': eventLabel,
-                    'value': eventValue
-                });
-            }
-            console.log(`Event tracked: ${eventName} - ${eventCategory}`);
+            console.log(`Event tracked: ${eventName} - ${eventCategory} - ${eventLabel} - ${eventValue}`);
         }
 
         // ===== APP INITIALIZATION =====
@@ -2181,6 +2803,9 @@
             loadCart();
             updateOpeningStatus();
             
+            // Initialiser l'authentification
+            initAuth();
+            
             initPWA();
             
             // Détection d'inactivité pour afficher la publicité
@@ -2189,6 +2814,57 @@
             setInterval(updateOpeningStatus, 30000);
             
             trackEvent('app_initialized', 'engagement');
+        }
+
+        function initAuth() {
+            // Vérifier si l'utilisateur est déjà connecté
+            const savedUser = localStorage.getItem('samservice_user');
+            if (savedUser) {
+                try {
+                    currentUser = JSON.parse(savedUser);
+                    updateUserInterface();
+                } catch (e) {
+                    console.error('Erreur parsing user:', e);
+                    localStorage.removeItem('samservice_user');
+                }
+            }
+            
+            // Ajouter des écouteurs pour fermer les modals
+            document.getElementById('authModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('authModal')) {
+                    closeAuthModal();
+                }
+            });
+            
+            // Vérification en temps réel de l'email
+            const emailInput = document.getElementById('registerEmail');
+            if (emailInput) {
+                emailInput.addEventListener('blur', async () => {
+                    const email = emailInput.value.trim();
+                    if (email && validateEmail(email)) {
+                        const exists = await checkEmail(email);
+                        const feedback = document.getElementById('emailFeedback');
+                        if (exists) {
+                            feedback.textContent = '⚠️ Cet email est déjà utilisé';
+                            feedback.style.color = '#e74c3c';
+                            feedback.style.display = 'block';
+                        } else {
+                            feedback.textContent = '✓ Email disponible';
+                            feedback.style.color = '#27ae60';
+                            feedback.style.display = 'block';
+                        }
+                    }
+                });
+            }
+            
+            // Ajouter la fonctionnalité de déconnexion au clic sur l'avatar
+            document.getElementById('userAvatar').addEventListener('click', function(e) {
+                e.stopPropagation();
+                const confirmLogout = confirm('Voulez-vous vous déconnecter ?');
+                if (confirmLogout) {
+                    logout();
+                }
+            });
         }
 
         function setupInactivityDetection() {
@@ -2218,6 +2894,13 @@
 
         // ===== NOUVELLES FONCTIONS MODAL =====
         function openOrderModal(product = null) {
+            // Vérifier si l'utilisateur est connecté
+            if (!currentUser) {
+                showNotification('Veuillez vous connecter pour commander');
+                openAuthModal('login');
+                return;
+            }
+            
             const modal = document.getElementById('orderModal');
             const whatsappPreview = document.getElementById('whatsappPreview');
             
@@ -2225,6 +2908,11 @@
             
             document.getElementById('orderForm').reset();
             document.getElementById('orderQuantity').value = 1;
+            
+            // Pré-remplir le nom avec l'utilisateur connecté
+            if (currentUser) {
+                document.getElementById('orderName').value = `${currentUser.prenom} ${currentUser.nom}`;
+            }
             
             if (product) {
                 selectProductForOrder(product);
@@ -2546,7 +3234,8 @@
                 product: selectedProduct,
                 quantity,
                 message,
-                date: new Date().toLocaleString('fr-FR')
+                date: new Date().toLocaleString('fr-FR'),
+                user: currentUser
             };
             
             const whatsappMessage = generateOrderMessage(currentOrder);
@@ -2562,11 +3251,12 @@
         function generateOrderMessage(order) {
             const total = order.product.price * order.quantity;
             const orderId = 'CMD-' + Date.now().toString().slice(-8);
+            const userInfo = order.user ? `(Client enregistré: ${order.user.email})` : '';
             
             return `🛒 *NOUVELLE COMMANDE SAMSERVICE* (${orderId})
 
 👤 *CLIENT:*
-• Nom: ${order.name}
+• Nom: ${order.name} ${userInfo}
 • Téléphone: ${order.phone}
 • Date: ${order.date}
 
@@ -2683,7 +3373,7 @@ Merci pour votre confiance ! 🚀`;
                     trackEvent('filter_products', 'engagement', filter);
                 });
             });
-        }
+        } 
 
         function filterProducts(category) {
             const productCards = document.querySelectorAll('.product-card');
@@ -2914,6 +3604,7 @@ Merci pour votre confiance ! 🚀`;
             if (e.key === 'Escape') {
                 closeOrderModal();
                 closeAdvertisement();
+                closeAuthModal();
             }
         });
 
@@ -2926,6 +3617,12 @@ Merci pour votre confiance ! 🚀`;
         document.getElementById('advertisementOverlay').addEventListener('click', (e) => {
             if (e.target === document.getElementById('advertisementOverlay')) {
                 closeAdvertisement();
+            }
+        });
+
+        document.getElementById('authModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('authModal')) {
+                closeAuthModal();
             }
         });
     </script>
