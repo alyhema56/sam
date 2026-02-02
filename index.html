@@ -1324,7 +1324,7 @@
         }
 
         .testimonial-rating {
-            color: #FFD700;
+            color: #ff7300;
             margin-top: 10px;
         }
 
@@ -1429,6 +1429,25 @@
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
+        }
+
+        /* ===== MOBILE MENU OVERLAY ===== */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+            opacity: 1;
         }
 
         /* ===== RESPONSIVE DESIGN ===== */
@@ -2111,6 +2130,9 @@
         </div>
     </header>
 
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
     <!-- Panier -->
     <div class="cart-container" id="cartContainer">
         <div class="cart-header">
@@ -2267,10 +2289,10 @@
             <span class="btn-tooltip">WhatsApp</span>
         </a>
         
-        <!-- Bouton Localisation -->
-        <a href="#contact" class="floating-btn location" aria-label="Voir la localisation">
+        <!-- Bouton Localisation - OUVRE GOOGLE MAPS -->
+        <a href="https://www.google.com/maps/search/?api=1&query=Secteur+15+Banfora+Burkina+Faso" class="floating-btn location" target="_blank" aria-label="Voir la localisation sur Google Maps">
             <i class="fas fa-map-marker-alt"></i>
-            <span class="btn-tooltip">Localisation</span>
+            <span class="btn-tooltip">Google Maps</span>
         </a>
         
         <!-- Bouton Appeler maintenant -->
@@ -2799,7 +2821,7 @@
             initTestimonials();
             initOrderForm();
             initScrollAnimations();
-            initMobileMenu();
+            initMobileMenu(); // NOUVELLE FONCTION AMÉLIORÉE
             loadCart();
             updateOpeningStatus();
             
@@ -3474,26 +3496,62 @@ Merci pour votre confiance ! 🚀`;
             }
         }
 
+        // ===== MOBILE MENU IMPROVEMENTS =====
         function initMobileMenu() {
             const menuBtn = document.getElementById('mobileMenuBtn');
             const navContainer = document.getElementById('navContainer');
+            const overlay = document.getElementById('mobileMenuOverlay');
             
-            menuBtn.addEventListener('click', () => {
+            function closeMenu() {
+                navContainer.classList.remove('active');
+                overlay.classList.remove('active');
+                menuBtn.setAttribute('aria-expanded', 'false');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+            
+            function openMenu() {
+                navContainer.classList.add('active');
+                overlay.classList.add('active');
+                menuBtn.setAttribute('aria-expanded', 'true');
+                menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            }
+            
+            // Bouton menu
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const isExpanded = navContainer.classList.contains('active');
-                navContainer.classList.toggle('active');
-                menuBtn.setAttribute('aria-expanded', !isExpanded);
-                menuBtn.innerHTML = navContainer.classList.contains('active') 
-                    ? '<i class="fas fa-times"></i>' 
-                    : '<i class="fas fa-bars"></i>';
+                
+                if (isExpanded) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+                
                 trackEvent('menu_toggle', 'navigation', isExpanded ? 'close' : 'open');
             });
             
+            // Clic sur l'overlay pour fermer
+            overlay.addEventListener('click', () => {
+                closeMenu();
+            });
+            
+            // Fermer en cliquant sur un lien
             document.querySelectorAll('nav a').forEach(link => {
                 link.addEventListener('click', () => {
-                    navContainer.classList.remove('active');
-                    menuBtn.setAttribute('aria-expanded', 'false');
-                    menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    closeMenu();
                 });
+            });
+            
+            // Fermer avec la touche Échap
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && navContainer.classList.contains('active')) {
+                    closeMenu();
+                }
+            });
+            
+            // Empêcher la propagation du clic à l'intérieur du menu
+            navContainer.addEventListener('click', (e) => {
+                e.stopPropagation();
             });
         }
 
